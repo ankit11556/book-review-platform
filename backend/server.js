@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv')
+const connectDb = require('./config/Db.config')
 
 dotenv.config()
 
@@ -15,6 +16,8 @@ app.use((err,req,res,next)=>{
   res.status(500).send('Something broke!')
 })
 
+connectDb().then(()=>{
 app.listen(PORT, ()=>{
   console.log(`server is running att http://localhost:${PORT}`);
+})
 })
