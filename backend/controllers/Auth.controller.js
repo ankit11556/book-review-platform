@@ -1,4 +1,5 @@
 const User = require("../models/User.model");
+const generateToken = require("../utils/GenerateToken.utils");
 
 // signUp controller
 exports.signupController = async (req,res) => {
@@ -40,12 +41,15 @@ exports.loginController = async (req,res) => {
       return res.status(403).json({message: "Invalid credentials"})
     }
 
+    const token = generateToken(user._id);   //userId pass in generateToken
+   
     res.status(201).json({message: "login successful",
       user: {
         id: user._id,
         name: user.name,
         email: user.email
-      }
+      },
+      token
     })
   } catch (error) {
      res.status(500).json({message: 'login failed',error: error.message})
