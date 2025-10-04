@@ -15,7 +15,7 @@ exports.addBookController = async (req,res) => {
 }
 
 //get all books
-exports.getAllBooks = async (req,res) => {
+exports.getAllBooksController = async (req,res) => {
   try {
     const page = Number(req.query.page) || 1; //default 1
     const limit = 5;
@@ -41,3 +41,22 @@ exports.getAllBooks = async (req,res) => {
     res.status(500).json({message: "Server error" });
   }
 }
+
+//book detail 
+exports.getBookDetailsController = async (req,res) => {
+  try {
+    const {id} = req.params;
+
+    const book = await Book.findById(id).populate("addedBy", "name email")
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json(book)
+  } catch (error) {
+    console.error("Error fetching book details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
