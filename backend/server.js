@@ -8,8 +8,10 @@ dotenv.config()
 app.use(express.json())
 
 const authRoutes = require('./routes/Auth.Routes')
+const bookRoutes = require('./routes/Book.Routes')
 
 app.use("/api/auth",authRoutes)
+app.use("/api/book",bookRoutes)
 
 app.get("/",(req,res)=>{
   res.send("API is running..");
