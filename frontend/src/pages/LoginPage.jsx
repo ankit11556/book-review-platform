@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginApi } from "../services/AuthApi";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,6 +11,8 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const {login} = useAuth()
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -24,7 +27,7 @@ const Login = () => {
       alert(res.data.message);
 
       //jwt token store in localStorage
-      localStorage.setItem("token", res.data.token);
+     login(res.data.token);
 
       navigate("/");
     } catch (err) {
