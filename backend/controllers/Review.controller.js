@@ -44,3 +44,40 @@ exports.getReviewsByBookController = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// edit review
+exports.editReviewController = async (req, res) => {
+  try {
+    const { id } = req.params; // review id
+    const { rating, reviewText } = req.body;
+
+    const review = await Review.findById(id);
+    if (!review) return res.status(404).json({ message: "Review not found" });
+
+
+    const updated = await Review.findByIdAndUpdate(
+      {_id: id},
+      {rating,reviewText},
+      {new: true, runValidators: true}
+    );
+
+    res.status(200).json({ message: "Review updated", updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// review delete
+exports.deleteReviewController = async (req, res) => {
+  try {
+    const { id } = req.params; // review id
+    const review = await Review.findByIdAndDelete(id);
+    if (!review) return res.status(404).json({ message: "Review not found" });
+
+    res.status(200).json({ message: "Review deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
