@@ -1,17 +1,19 @@
 const express = require('express');
 const app = express();
-const dotenv = require('dotenv')
-const connectDb = require('./config/Db.config')
+const dotenv = require('dotenv');
+const connectDb = require('./config/Db.config');
 
-dotenv.config()
+dotenv.config();
 
-app.use(express.json())
+app.use(express.json());
 
-const authRoutes = require('./routes/Auth.Routes')
-const bookRoutes = require('./routes/Book.Routes')
+const authRoutes = require('./routes/Auth.Routes');
+const bookRoutes = require('./routes/Book.Routes');
+const reviewRoutes = require('./routes/Review.Routes');
 
-app.use("/api/auth",authRoutes)
-app.use("/api/book",bookRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/book", bookRoutes);
+app.use("/api/review", reviewRoutes)
 
 app.get("/",(req,res)=>{
   res.send("API is running..");
