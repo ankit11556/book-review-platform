@@ -48,7 +48,7 @@ const Home = () => {
               <p className="text-yellow-500 mt-2">⭐ {book.averageRating || 0}</p>
 
               <button
-                onClick={() => navigate(`/books/${book._id}`)}
+                onClick={() => navigate(`/book-detail-page/${book._id}`)}
                 className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-semibold rounded hover:scale-105 transform transition"
               >
                 View Details

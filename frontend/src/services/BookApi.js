@@ -17,3 +17,7 @@ export const addBookApi = async (data) => {
     }
   )
 }
+
+export const getBookDetailsApi = (id)=>{
+  return axios.get(`${API_URL}/book/${id}`)
+}

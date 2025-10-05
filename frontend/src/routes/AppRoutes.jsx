@@ -3,6 +3,7 @@ import Signup from "../pages/SignupPage";
 import Login from "../pages/LoginPage";
 import Home from "../pages/HomePage";
 import AddBook from "../pages/AddBookPage";
+import BookDetails from "../pages/BookDetailsPage";
 const AppRoutes = () =>{
   return(
     <Routes>
@@ -11,6 +12,7 @@ const AppRoutes = () =>{
        <Route path="/" element={<Home/>}></Route>
        
        <Route path="add-book" element={<AddBook/>}></Route>
+       <Route path="book-detail-page/:id" element={<BookDetails/>}></Route>
     </Routes>
   )
 }
