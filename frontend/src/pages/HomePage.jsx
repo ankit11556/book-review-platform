@@ -14,7 +14,6 @@ const Home = () => {
     try {
       setLoading(true);
       const res = await getAllBooksApi(pageNumber);
-      console.log(res.data.books);
       
       setBooks(res.data.books);
       setTotalPages(res.data.totalPages);
