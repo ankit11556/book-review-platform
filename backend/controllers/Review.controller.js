@@ -27,3 +27,20 @@ exports.addReviewController = async (req,res) => {
     res.status(500).json({ message: "Server error" });
   }
 }
+
+// get reviews 
+exports.getReviewsByBookController = async (req, res) => {
+  try {
+    const { bookId } = req.params;
+
+    const reviews = await Review.find({ bookId }).populate("userId", "name email");
+
+    const avgRating =
+      reviews.reduce((sum, r) => sum + r.rating, 0) / (reviews.length || 1);
+
+    res.status(200).json({ reviews, averageRating: avgRating.toFixed(1) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
