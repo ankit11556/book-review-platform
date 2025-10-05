@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const {user,logout} = useAuth()
 
   return (
     <nav className="bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-600 text-white shadow-lg sticky top-0 z-50">
@@ -21,8 +24,14 @@ const Navbar = () => {
             <Link to="/" className="hover:text-yellow-300 transition-colors duration-300">Home</Link>
             <Link to="/add-book" className="hover:text-yellow-300 transition-colors duration-300">Add Book</Link>
             <Link to="/profile" className="hover:text-yellow-300 transition-colors duration-300">Profile</Link>
+            {user?(
+              <Link className="bg-red-500 px-2 py-1.5 rounded-lg" onClick={()=>logout()}>Logout</Link>
+            ):(
+              <>
             <Link to="/login" className="hover:text-yellow-300 transition-colors duration-300">Login</Link>
             <Link to="/signup" className="hover:text-yellow-300 transition-colors duration-300">Signup</Link>
+            </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
