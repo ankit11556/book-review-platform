@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getBookDetailsApi } from "../services/BookApi";
 import { useAuth } from "../contexts/AuthContext";
+import { addReviewApi } from "../services/ReviewApi";
 
 
 const BookDetails = () => {
@@ -9,8 +10,8 @@ const BookDetails = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const [newRating, setNewRating] = useState(0);
-  const [newReview, setNewReview] = useState("");
+  const [rating, setRating] = useState(0);       //rating, reviewText
+  const [reviewText, setReviewText] = useState("");
 
   const {token} = useAuth()
   
@@ -29,6 +30,18 @@ const BookDetails = () => {
   useEffect(() => {
     fetchBook();
   }, [id]);
+
+  const handleAddReview = async (e) => {
+    e.preventDefault();
+    console.log("click");
+    
+    try {
+      const res = await addReviewApi(id,{rating, reviewText},token)
+      alert(res.data.message)  
+    } catch (error) {
+      alert(error.response?.data?.message)
+    }
+  }
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!book) return <p className="text-center mt-10">Book not found!</p>;
@@ -68,19 +81,19 @@ const BookDetails = () => {
               type="number"
               min="1"
               max="5"
-              value={newRating}
-              onChange={(e) => setNewRating(e.target.value)}
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
               placeholder="Rating (1-5)"
               className="border p-2 rounded w-full mb-2"
             />
             <textarea
-              value={newReview}
-              onChange={(e) => setNewReview(e.target.value)}
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
               placeholder="Write your review"
               className="border p-2 rounded w-full mb-2"
             />
             <button
-              // onClick={handleAddReview}
+               onClick={handleAddReview}
               className="px-4 py-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded hover:scale-105 transform transition"
             >
               Submit Review
